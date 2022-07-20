@@ -16,7 +16,7 @@ public class MessageSender {
         System.out.println("Connecting to message broker");
         String messageBroker = commandArgs.getMessageBroker();
         if("hornetq".equals(messageBroker)){
-            ConnectionConfig.sendHornetqMessage(commandArgs.getHost(), commandArgs.getPort()); 
+            MessageDispatcher.sendHornetqMessage(commandArgs.getHost(), commandArgs.getPort()); 
         }
         
     }

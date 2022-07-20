@@ -21,7 +21,7 @@ import javax.naming.NamingException;
  *
  * @author hybof
  */
-public class ConnectionConfig {
+public class MessageDispatcher {
 
     public static void sendHornetqMessage(String host, String port) {
         Session session = null;

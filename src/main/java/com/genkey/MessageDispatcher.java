@@ -23,7 +23,7 @@ import javax.naming.NamingException;
  */
 public class MessageDispatcher {
 
-    public static void sendHornetqMessage(String host, String port) {
+   public static void sendHornetqMessage(String host, String port) {
         Session session = null;
         try {
             Properties prop = new Properties();
@@ -53,6 +53,14 @@ public class MessageDispatcher {
             throw new RuntimeException(ex);
         }
 
+    }
+    
+    public static void sendArtemisMessage(){
+        System.out.println("Artemis");
+    }
+    
+    public static void sendActiveMQMessage(){
+        System.out.println("ActiveMQ");
     }
     
 

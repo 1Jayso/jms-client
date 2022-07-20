@@ -6,11 +6,13 @@
 package com.genkey;
 
 import com.beust.jcommander.Parameter;
+import com.beust.jcommander.Parameters;
 
 /**
  *
  * @author hybof
  */
+@Parameters(separators = "=")
 public class CommandArgs {
     @Parameter(names={"-messageBroker", "-mb"}, description="Message Broker type")
     private String messageBroker ="hornetq";
@@ -18,6 +20,17 @@ public class CommandArgs {
     private String host ="localhost";
     @Parameter(names={"-port", "-p"}, description="Message Broker port")
     private String port ="4447";
+    
+    
+    static CommandArgs instance = new CommandArgs();
+    public static CommandArgs fetchInstance() {
+		return instance;
+	}
+	
+	private CommandArgs() {
+		
+	}
+	
 
     public String getMessageBroker() {
         return messageBroker;

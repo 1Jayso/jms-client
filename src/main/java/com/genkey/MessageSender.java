@@ -7,6 +7,8 @@ package com.genkey;
 
 import com.beust.jcommander.JCommander;
 
+import static com.genkey.MessageDispatcher.sendHornetqMessage;
+
 /**
  *
  * @author hybof
@@ -19,16 +21,22 @@ public class MessageSender {
         System.out.println("Connecting to message broker");
         String messageBroker = argSpec.getMessageBroker();
         System.out.println("message Broker is "+messageBroker);
-        if("hornetq".equals(messageBroker)){
-            MessageDispatcher.sendHornetqMessage(argSpec.getHost(), argSpec.getPort()); 
+        System.out.println("message Broker host is " +argSpec.getHost());
+
+//        String hornetq = "hornetq";
+        switch (messageBroker) {
+            case "activeMQ":
+                MessageDispatcher.sendActiveMQMessage();
+                break;
+            case "artemis":
+                MessageDispatcher.sendArtemisMessage();
+                break;
+            default:
+                sendHornetqMessage(argSpec.getHost(), argSpec.getPort());
         }
-        if("artemis".equals(messageBroker)){
-            MessageDispatcher.sendArtemisMessage();
-        }
-        if("activeMQ".equals(messageBroker)){
-            MessageDispatcher.sendActiveMQMessage();
-        }
-        
+
+
+
     }
     
 }

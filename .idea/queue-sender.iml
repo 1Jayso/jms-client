@@ -10,8 +10,18 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="jboss-client" level="application" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/jboss7/application-server/bin/client/jboss-client.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="Maven: org.jboss.javaee:jboss-javaee:5.0.1.GA" level="project" />
-    <orderEntry type="library" name="Maven: com.beust:jcommander:1.82" level="project" />
+    <orderEntry type="library" name="Maven: com.beust:jcommander:1.29" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.hornetq:hornetq-logging:2.2.21.Final" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.jboss.netty:netty:3.2.10.Final" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: org.hornetq:hornetq-jms:2.2.21.Final" level="project" />

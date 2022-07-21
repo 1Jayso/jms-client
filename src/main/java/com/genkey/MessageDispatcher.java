@@ -6,13 +6,7 @@
 package com.genkey;
 
 import java.util.Properties;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
-import javax.jms.Queue;
-import javax.jms.Session;
+import javax.jms.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -24,26 +18,34 @@ import javax.naming.NamingException;
 public class MessageDispatcher {
 
    public static void sendHornetqMessage(String host, String port) {
-        Session session = null;
         try {
             Properties prop = new Properties();
             prop.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
             prop.put(Context.PROVIDER_URL, "remote://" + host + ":" + port);
             prop.put(Context.SECURITY_PRINCIPAL, "hornetq");
             prop.put(Context.SECURITY_CREDENTIALS, "hornetqadmin");
-            prop.put("jboss.naming.client.ejb.context", true);
-
+//            prop.put("jboss.naming.client.ejb.context", true);
             Context context = new InitialContext(prop);
             System.out.println("Context is " + context);
-            ConnectionFactory cf = (ConnectionFactory) context.lookup("jms/RemoteConnectionFactory");
-            Connection connection = cf.createConnection();
-            session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            Queue queue = (Queue) context.lookup("/queue/clientResponseQueue");
-            MessageProducer sender = session.createProducer(queue);
-            ObjectMessage jmsMessage = session.createObjectMessage();
-            jmsMessage.setObject("Hi there");
-            sender.send(jmsMessage);
-            System.out.println("Sent message: " + jmsMessage.toString());
+
+            QueueConnectionFactory factory = (QueueConnectionFactory) context.lookup("jms/RemoteConnectionFactory");
+            Queue queue = (Queue) context.lookup("jms/queue/clientResponse") ;
+            context.close();
+
+//            creating Objects
+            QueueConnection connection = factory.createQueueConnection("hornetq", "hornetqadmin");
+            QueueSession session = connection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+            QueueSender sender = session.createSender(queue);
+
+            String messageText = "Hello, it's JMS here!";
+            TextMessage message = session.createTextMessage(messageText);
+            sender.send(message);
+
+            System.out.println("Sending Successful, Exiting.....");
+            connection.close();
+            System.exit(0);
+
+
         } catch (NamingException ex) {
             System.out.println("Failure resolving JNDI resources: " + ex.getLocalizedMessage());
             throw new RuntimeException(ex);
@@ -57,6 +59,7 @@ public class MessageDispatcher {
     
     public static void sendArtemisMessage(){
         System.out.println("Artemis");
+
     }
     
     public static void sendActiveMQMessage(){

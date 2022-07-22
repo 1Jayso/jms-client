@@ -27,20 +27,14 @@ public class MessageDispatcher {
 //            prop.put("jboss.naming.client.ejb.context", true);
             Context context = new InitialContext(prop);
             System.out.println("Context is " + context);
-
-            QueueConnectionFactory factory = (QueueConnectionFactory) context.lookup("jms/RemoteConnectionFactory");
+            ConnectionFactory connectionFactory = (ConnectionFactory) context.lookup("jms/RemoteConnectionFactory");
+            Connection connection = connectionFactory.createConnection();
             Queue queue = (Queue) context.lookup("jms/queue/clientResponseQueue");
-            context.close();
-
-//            creating Objects
-            QueueConnection connection = factory.createQueueConnection("hornetq", "hornetqadmin");
-            QueueSession session = connection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
-            QueueSender sender = session.createSender(queue);
-
-            String messageText = "Hello, it's JMS here!";
-            TextMessage message = session.createTextMessage(messageText);
-            sender.send(message);
-
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            MessageProducer sender = session.createProducer(queue);
+            TextMessage jmsMessage = session.createTextMessage();
+            jmsMessage.setText("Hi there, sending message");
+            sender.send(jmsMessage);
             System.out.println("Sending Successful, Exiting.....");
             connection.close();
             System.exit(0);
@@ -64,13 +58,14 @@ public class MessageDispatcher {
             Context context = new InitialContext(prop);
             System.out.println("Context is " + context);
             ConnectionFactory cf = (ConnectionFactory) context.lookup("ConnectionFactory");
-            Queue orderQueue = (Queue) context.lookup("queues/clientResponseQueue");
+            Queue queue = (Queue) context.lookup("ClientResponseQueue");
             Connection connection = cf.createConnection();
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            MessageProducer producer = session.createProducer(orderQueue);
+            MessageProducer sender = session.createProducer(queue);
             connection.start();
-            TextMessage message = session.createTextMessage("This is an order");
-            producer.send(message);
+            TextMessage jmsMessage = session.createTextMessage();
+            jmsMessage.setText("Hi there, sending message");
+            sender.send(jmsMessage);
             System.out.println("Sending Successful, Exiting.....");
             connection.close();
             System.exit(0);

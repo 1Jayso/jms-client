@@ -12,7 +12,7 @@
             <properties>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.executable>java</exec.executable>
-                <exec.appArgs>-mb=artemis -h=localhost -p=61616</exec.appArgs>
+                <exec.appArgs>-mb=hornetq -h=192.168.77.119 -p=4447</exec.appArgs>
                 <exec.vmArgs></exec.vmArgs>
                 <exec.mainClass>com.genkey.MessageSender</exec.mainClass>
             </properties>
@@ -30,7 +30,7 @@
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.executable>java</exec.executable>
                 <jpda.listen>true</jpda.listen>
-                <exec.appArgs>-mb=artemis -h=localhost -p=61616</exec.appArgs>
+                <exec.appArgs>-mb=hornetq -h=192.168.77.119 -p=4447</exec.appArgs>
                 <exec.vmArgs>-agentlib:jdwp=transport=dt_socket,server=n,address=${jpda.address}</exec.vmArgs>
                 <exec.mainClass>com.genkey.MessageSender</exec.mainClass>
             </properties>
@@ -47,7 +47,7 @@
             <properties>
                 <exec.args>${exec.vmArgs} -classpath %classpath ${exec.mainClass} ${exec.appArgs}</exec.args>
                 <exec.executable>java</exec.executable>
-                <exec.appArgs>-mb=artemis -h=localhost -p=61616</exec.appArgs>
+                <exec.appArgs>-mb=hornetq -h=192.168.77.119 -p=4447</exec.appArgs>
                 <exec.vmArgs></exec.vmArgs>
                 <exec.mainClass>com.genkey.MessageSender</exec.mainClass>
             </properties>

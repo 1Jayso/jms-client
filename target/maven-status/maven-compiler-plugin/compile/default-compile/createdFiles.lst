@@ -1,5 +1,4 @@
 com\genkey\MessageDispatcher.class
 com\genkey\MessageSender.class
 com\genkey\RequestProcessor.class
-.netbeans_automatic_build
 com\genkey\CommandArgs.class

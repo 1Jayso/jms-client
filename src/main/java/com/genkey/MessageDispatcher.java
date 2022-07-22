@@ -17,28 +17,7 @@ import javax.naming.NamingException;
  */
 public class MessageDispatcher {
 
-    public static void sendMessage(ConnectionFactory connectionFactory, Context context) {
-        try {
-            Connection connection = connectionFactory.createConnection();
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            Queue queue = (Queue) context.lookup("/queue/clientResponseQueue");
-            MessageProducer sender = session.createProducer(queue);
-            ObjectMessage jmsMessage = session.createObjectMessage();
-            jmsMessage.setObject("Hi there");
-            sender.send(jmsMessage);
-            System.out.println("Sent message: " + jmsMessage.toString());
-        } catch (JMSException ex) {
-            System.out.println("Failure sending JMS message: " + ex.getLocalizedMessage());
-            throw new RuntimeException(ex);
-        } catch (NamingException ex) {
-            System.out.println("Failure resolving JNDI resources: " + ex.getLocalizedMessage());
-            throw new RuntimeException(ex);
-
-        }
-    }
-
-
-   public static void sendHornetqMessage(String host, String port) {
+    public static void sendHornetqMessage(String host, String port) {
         try {
             Properties prop = new Properties();
             prop.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
@@ -48,9 +27,23 @@ public class MessageDispatcher {
 //            prop.put("jboss.naming.client.ejb.context", true);
             Context context = new InitialContext(prop);
             System.out.println("Context is " + context);
-            ConnectionFactory cf = (ConnectionFactory) context.lookup("jms/RemoteConnectionFactory");
-            sendMessage(cf, context);
 
+            QueueConnectionFactory factory = (QueueConnectionFactory) context.lookup("jms/RemoteConnectionFactory");
+            Queue queue = (Queue) context.lookup("jms/queue/clientResponseQueue");
+            context.close();
+
+//            creating Objects
+            QueueConnection connection = factory.createQueueConnection("hornetq", "hornetqadmin");
+            QueueSession session = connection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+            QueueSender sender = session.createSender(queue);
+
+            String messageText = "Hello, it's JMS here!";
+            TextMessage message = session.createTextMessage(messageText);
+            sender.send(message);
+
+            System.out.println("Sending Successful, Exiting.....");
+            connection.close();
+            System.exit(0);
         } catch (NamingException ex) {
             System.out.println("Failure resolving JNDI resources: " + ex.getLocalizedMessage());
             throw new RuntimeException(ex);
@@ -71,7 +64,16 @@ public class MessageDispatcher {
             Context context = new InitialContext(prop);
             System.out.println("Context is " + context);
             ConnectionFactory cf = (ConnectionFactory) context.lookup("ConnectionFactory");
-            sendMessage(cf, context);
+            Queue orderQueue = (Queue) context.lookup("queues/clientResponseQueue");
+            Connection connection = cf.createConnection();
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            MessageProducer producer = session.createProducer(orderQueue);
+            connection.start();
+            TextMessage message = session.createTextMessage("This is an order");
+            producer.send(message);
+            System.out.println("Sending Successful, Exiting.....");
+            connection.close();
+            System.exit(0);
         } catch (NamingException ex) {
             System.out.println("Failure resolving JNDI resources: " + ex.getLocalizedMessage());
             throw new RuntimeException(ex);
@@ -79,6 +81,6 @@ public class MessageDispatcher {
             System.out.println("Failure sending JMS message: " + ex.getLocalizedMessage());
             throw new RuntimeException(ex);
         }
-    }
 
+    }
 }

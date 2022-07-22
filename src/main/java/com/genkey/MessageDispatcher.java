@@ -53,13 +53,6 @@ public class MessageDispatcher {
 
     public static void sendArtemisMessage(String host, String port) {
         try {
-//            Properties prop = new Properties();
-//            prop.put(Context.INITIAL_CONTEXT_FACTORY, "org.apache.activemq.artemis.jndi.ActiveMQInitialContextFactory");
-//            prop.put(Context.PROVIDER_URL, "tcp://" + host + ":" + port);
-//            prop.put(Context.SECURITY_PRINCIPAL, "artemis");
-//            prop.put(Context.SECURITY_CREDENTIALS, "artemisadmin");
-//            Context context = new InitialContext(prop);
-//            System.out.println("Context is " + context);
             ConnectionFactory cf = new ActiveMQJMSConnectionFactory("tcp://" + host + ":" + port);
             String queueName = QUEUE_QUALIFIED_PREFIX + "ClientResponseQueue";
             Destination destination = ActiveMQDestination.fromPrefixedName(queueName);

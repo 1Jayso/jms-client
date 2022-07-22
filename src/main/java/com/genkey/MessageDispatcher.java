@@ -6,13 +6,7 @@
 package com.genkey;
 
 import java.util.Properties;
-import javax.jms.Connection;
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
-import javax.jms.Queue;
-import javax.jms.Session;
+import javax.jms.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -43,19 +37,20 @@ public class MessageDispatcher {
         }
     }
 
-    public static void sendHornetqMessage(String host, String port) {
+
+   public static void sendHornetqMessage(String host, String port) {
         try {
             Properties prop = new Properties();
             prop.put(Context.INITIAL_CONTEXT_FACTORY, "org.jboss.naming.remote.client.InitialContextFactory");
             prop.put(Context.PROVIDER_URL, "remote://" + host + ":" + port);
             prop.put(Context.SECURITY_PRINCIPAL, "hornetq");
             prop.put(Context.SECURITY_CREDENTIALS, "hornetqadmin");
-            prop.put("jboss.naming.client.ejb.context", true);
-
+//            prop.put("jboss.naming.client.ejb.context", true);
             Context context = new InitialContext(prop);
             System.out.println("Context is " + context);
             ConnectionFactory cf = (ConnectionFactory) context.lookup("jms/RemoteConnectionFactory");
             sendMessage(cf, context);
+
         } catch (NamingException ex) {
             System.out.println("Failure resolving JNDI resources: " + ex.getLocalizedMessage());
             throw new RuntimeException(ex);

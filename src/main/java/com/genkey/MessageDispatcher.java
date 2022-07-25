@@ -31,8 +31,8 @@ public class MessageDispatcher {
             Context context = new InitialContext(prop);
             System.out.println("Context is " + context);
             ConnectionFactory connectionFactory = (ConnectionFactory) context.lookup("jms/RemoteConnectionFactory");
-            Connection connection = connectionFactory.createConnection("hornetq", "hornetqadmin");          
-            Destination destination = (Destination) context.lookup("/queues/clientResponseQueue");
+            Connection connection = connectionFactory.createConnection("hornetq", "hornetqadmin");
+            Destination destination = (Destination) context.lookup("jms/queue/clientResponse");
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             MessageProducer sender = session.createProducer(destination);
             TextMessage jmsMessage = session.createTextMessage();

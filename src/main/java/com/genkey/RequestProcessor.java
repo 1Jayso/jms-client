@@ -4,10 +4,46 @@
  */
 package com.genkey;
 
+import java.io.*;
+import java.util.Properties;
+import java.util.Scanner;
+
 /**
  *
  * @author hybof
  */
 public class RequestProcessor {
+
+    public static void requestProcessor(String filepath) throws IOException {
+        BufferedReader br = new BufferedReader(
+                new FileReader(filepath));
+        String s;
+        while((s = br.readLine()) != null){
+            System.out.println(s);
+        }
+        br.close();
+    }
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     
-}
+
+
+

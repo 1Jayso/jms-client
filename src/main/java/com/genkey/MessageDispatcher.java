@@ -48,7 +48,6 @@ public class MessageDispatcher {
             System.out.println("Failure sending JMS message: " + ex.getLocalizedMessage());
             throw new RuntimeException(ex);
         }
-
     }
 
     public static void sendArtemisMessage(String host, String port) {

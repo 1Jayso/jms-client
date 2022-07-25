@@ -7,7 +7,12 @@ package com.genkey;
 
 import com.beust.jcommander.JCommander;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
 import static com.genkey.MessageDispatcher.sendHornetqMessage;
+import static com.genkey.RequestProcessor.requestProcessor;
 
 /**
  *
@@ -15,7 +20,9 @@ import static com.genkey.MessageDispatcher.sendHornetqMessage;
  */
 public class MessageSender {
     
-    public static void main(String args[]){
+    public static void main(String args[]) throws IOException {
+        requestProcessor("C:\\Users\\sowah\\Documents\\file1.txt");
+
        CommandArgs argSpec = CommandArgs.fetchInstance();
 		new JCommander(argSpec, args);
         System.out.println("Connecting to message broker");

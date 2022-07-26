@@ -1,5 +1,6 @@
 Moved the sendArtemisMessage method and sendHornetMessage to RequestProcessor class
 Added Functions to traverse through a directory and pick every file and read it content while sending to the Queue
+Configured email notification to be triggered when push events happen via the settings section of the of the repo.
 
 
 Challenges:

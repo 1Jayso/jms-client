@@ -1,0 +1,6 @@
+Moved the sendArtemisMessage method and sendHornetMessage to RequestProcessor class
+Added Functions to traverse through a directory and pick every file and read it content while sending to the Queue
+
+
+Challenges:
+I get an AccessDenied exception after pushing all messages to artemis queue.

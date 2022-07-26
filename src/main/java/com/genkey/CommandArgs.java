@@ -8,19 +8,34 @@ package com.genkey;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
 
+
+
 /**
  *
  * @author hybof
  */
 @Parameters(separators = "=")
+
 public class CommandArgs {
-    @Parameter(names={"-messageBroker", "-mb"}, description="Message Broker type")
+    @Parameter(names={"--messageBroker", "-mb"}, description="Message Broker type", required = true)
     private String messageBroker ="hornetq";
-    @Parameter(names={"-host", "-h"}, description="Message Broker Host")
+    @Parameter(names={"--host", "-h"}, description="Message Broker Host", required = true)
     private String host ="localhost";
-    @Parameter(names={"-port", "-p"}, description="Message Broker port")
+    @Parameter(names={"--port", "-p"}, description="Message Broker port", required = true)
     private String port ="4447";
-    
+    @Parameter(names={"--filepath", "-f"}, description="Filepath", required = true)
+    private String filepath;
+
+
+    public String getFilepath() {
+        return filepath;
+    }
+
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
+    }
+
+
     
     static CommandArgs instance = new CommandArgs();
     public static CommandArgs fetchInstance() {
@@ -55,7 +70,7 @@ public class CommandArgs {
     public void setPort(String port) {
         this.port = port;
     }
-    
-    
-    
+
+
+
 }

@@ -6,13 +6,10 @@
 package com.genkey;
 
 import com.beust.jcommander.JCommander;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Properties;
+import java.nio.file.Path;
 
-import static com.genkey.MessageDispatcher.sendHornetqMessage;
-import static com.genkey.RequestProcessor.requestProcessor;
+
 
 /**
  *
@@ -21,8 +18,7 @@ import static com.genkey.RequestProcessor.requestProcessor;
 public class MessageSender {
     
     public static void main(String args[]) throws IOException {
-        requestProcessor("C:\\Users\\sowah\\Documents\\file1.txt");
-
+//        requestProcessor("C:\\Users\\sowah\\Documents\\file1.txt");
        CommandArgs argSpec = CommandArgs.fetchInstance();
 		new JCommander(argSpec, args);
         System.out.println("Connecting to message broker");
@@ -30,13 +26,18 @@ public class MessageSender {
         System.out.println("message Broker is "+messageBroker);
         System.out.println("message Broker host is " +argSpec.getHost());
 
-//        String hornetq = "hornetq";
+
+        RequestProcessor listFiles = new RequestProcessor();
+        System.out.println("-------------------------------------------------");
+        System.out.println("Reading Files...");
+        listFiles.listAllFiles(argSpec.getFilepath());
+
         switch (messageBroker) {
             case "artemis":
-                MessageDispatcher.sendArtemisMessage(argSpec.getHost(), argSpec.getPort());
+                RequestProcessor.sendArtemisMessage(argSpec.getHost(), argSpec.getPort(), Path.of(argSpec.getFilepath()));
                 break;
             default:
-                sendHornetqMessage(argSpec.getHost(), argSpec.getPort());
+                RequestProcessor.sendHornetqMessage(argSpec.getHost(), argSpec.getPort(), Path.of(argSpec.getFilepath()));
         }
 
 

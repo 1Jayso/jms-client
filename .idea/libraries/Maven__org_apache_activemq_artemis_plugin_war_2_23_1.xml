@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.apache.activemq:artemis-plugin:war:2.23.1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/activemq/artemis-plugin/2.23.1/artemis-plugin-2.23.1.war!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/activemq/artemis-plugin/2.23.1/artemis-plugin-2.23.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/activemq/artemis-plugin/2.23.1/artemis-plugin-2.23.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

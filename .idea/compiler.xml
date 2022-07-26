@@ -13,4 +13,9 @@
       <module name="queue-sender" target="11" />
     </bytecodeTargetLevel>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="queue-sender" options="--add-exports java.base/sun.security.util=ALL-UNNAMED" />
+    </option>
+  </component>
 </project>
